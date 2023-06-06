@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import React, { useRef } from 'react';
 import './App.css';
+import { ReactComponent as MySVG } from'./template.svg';
+// import { WritingPad } from './utils/WritingPad.js';
+import { pdfDownload } from './utils/pdfDownload';
+import WritingPad from './WritingPad';
 
 function App() {
+  // WritingPad();
+  const printRef = useRef();
+  const handleDownloadClick = () => {
+    pdfDownload(printRef.current);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button
+        type="button"
+        onClick={handleDownloadClick}
+      >
+        PDFダウンロード
+      </button>
+      <div ref={printRef}>
+        <MySVG />
+        <WritingPad />
+      </div>
     </div>
   );
 }
