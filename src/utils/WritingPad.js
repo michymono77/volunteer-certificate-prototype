@@ -1,8 +1,12 @@
 export function WritingPad() {
   const canvas = document.querySelector('canvas');
+  console.log(canvas);
   const form = document.querySelector('.signature-pad-form');
+  console.log(form);
   const clearButton = document.querySelector('.clear-button');
+  console.log(clearButton);
   const ctx = canvas.getContext('2d');
+  console.log(ctx);
 
   let writingMode = false;
   const handlePointerDown = (event) => {
@@ -33,6 +37,7 @@ export function WritingPad() {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+
     // converts the current content of the canvas into a
     // base64-encoded string representation
     const imageURL = canvas.toDataURL();
@@ -42,8 +47,19 @@ export function WritingPad() {
     image.width = canvas.width;
     image.style.display = 'block';
     // add the element in the DOM
-    form.appendChild(image);
-    clearPad();
+    // const signatureInsertTarget = document.getElementById('foreignObjectWrapper');
+    const signatureInsertTarget = document.getElementById('signatureInput');
+
+    // const signatureInsertTarget = document.getElementById('svgContainer');
+    // while (signatureInsertTarget.firstChild) {
+    //   signatureInsertTarget.removeChild(signatureInsertTarget.firstChild);
+    // }
+    while (!signatureInsertTarget.querySelector('img')) {
+      signatureInsertTarget.appendChild(image);
+      clearPad();
+    }
+    // signatureInsertTarget.appendChild(image);
+    // clearPad();
   })
   const clearPad = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -52,4 +68,4 @@ export function WritingPad() {
     event.preventDefault();
     clearPad();
   })
-}
+};
